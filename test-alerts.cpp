@@ -4,22 +4,22 @@
 #include "test/catch.hpp"
 #include "typewise-alert.h"
 
-TEST_CASE("infers the breach according to limits") {
+TEST_CASE("infers the breach according to limits case low") {
   REQUIRE(inferBreach(12, 20, 30) == TOO_LOW);
 }
 
-TEST_CASE("infers the breach according to limits") {
+TEST_CASE("infers the breach according to limits case high") {
   REQUIRE(inferBreach(35, 20, 30) == TOO_HIGH);
 }
 
-TEST_CASE("infers the breach according to limits") {
+TEST_CASE("infers the breach according to limits case normal") {
   REQUIRE(inferBreach(25, 20, 30) == NORMAL);
 }
 
 TEST_CASE("set limits according cooling type") {
-  Limits limitValues;
+ 	Limits limitValues;
   
-  limitValues = setLimits(PASSIVE_COOLING);
+  	limitValues = setLimits(PASSIVE_COOLING);
 	REQUIRE(limitValues.lowerLimit == 0);
 	REQUIRE(limitValues.upperLimit == 35);
 	
@@ -37,7 +37,7 @@ TEST_CASE("classify type of breach (high/low/normal)") {
 }
 
 TEST_CASE("check, classify breach and send alert based on target") {
-  BatteryCharacter batteryDescription;
+  	BatteryCharacter batteryDescription;
   
   	strcpy(batteryDescription.brand, "Excide");
 	batteryDescription.coolingType = HI_ACTIVE_COOLING;
