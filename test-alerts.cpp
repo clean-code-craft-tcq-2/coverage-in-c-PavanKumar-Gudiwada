@@ -1,5 +1,6 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 
+#include <string.h>
 #include "test/catch.hpp"
 #include "typewise-alert.h"
 
@@ -38,15 +39,15 @@ TEST_CASE("classify type of breach (high/low/normal)") {
 TEST_CASE("check, classify breach and send alert based on target") {
   BatteryCharacter batteryDescription;
   
-  *batteryDescription.brand = "Excide";
+  	strcpy(batteryDescription.brand, "Excide");
 	batteryDescription.coolingType = HI_ACTIVE_COOLING;
 	checkAndAlert(TO_CONTROLLER,batteryDescription, 49.0);
 	
-	*batteryDescription.brand = "Amaron";
+	strcpy(batteryDescription.brand, "Amaron");
 	batteryDescription.coolingType = PASSIVE_COOLING;
 	checkAndAlert(TO_EMAIL, batteryDescription, 36.0);
 	
-	*batteryDescription.brand = "Amaron";
+	strcpy(batteryDescription.brand, "Amaron");
 	batteryDescription.coolingType = PASSIVE_COOLING;
 	checkAndAlert(TO_EMAIL, batteryDescription, -10.0);
 }
