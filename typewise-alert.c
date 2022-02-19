@@ -1,6 +1,8 @@
 #include "typewise-alert.h"
 #include <stdio.h>
 
+char * breachStr[] = {"low", "high"};
+
 BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
   if(value < lowerLimit) {
     return TOO_LOW;
@@ -11,25 +13,34 @@ BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
   return NORMAL;
 }
 
-BreachType classifyTemperatureBreach(
-    CoolingType coolingType, double temperatureInC) {
-  int lowerLimit = 0;
-  int upperLimit = 0;
-  switch(coolingType) {
+Limits setLimits(CoolingType coolingType)
+{
+	Limits limitValues;
+	
+	switch(coolingType) {
     case PASSIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 35;
+      limitValues.lowerLimit = 0;
+      limitValues.upperLimit = 35;
       break;
     case HI_ACTIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 45;
+      limitValues.lowerLimit = 0;
+      limitValues.upperLimit = 45;
       break;
     case MED_ACTIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 40;
+      limitValues.lowerLimit = 0;
+      limitValues.upperLimit = 40;
       break;
   }
-  return inferBreach(temperatureInC, lowerLimit, upperLimit);
+  return limitValues;
+}
+
+BreachType classifyTemperatureBreach(
+    CoolingType coolingType, double temperatureInC) {
+
+	Limits limitValues;
+	limitValues = setLimits(coolingType);
+
+  return inferBreach(temperatureInC, limitValues.lowerLimit, limitValues.upperLimit);
 }
 
 void checkAndAlert(
@@ -56,16 +67,11 @@ void sendToController(BreachType breachType) {
 
 void sendToEmail(BreachType breachType) {
   const char* recepient = "a.b@c.com";
-  switch(breachType) {
-    case TOO_LOW:
-      printf("To: %s\n", recepient);
-      printf("Hi, the temperature is too low\n");
-      break;
-    case TOO_HIGH:
-      printf("To: %s\n", recepient);
-      printf("Hi, the temperature is too high\n");
-      break;
-    case NORMAL:
-      break;
+  
+  if((breachType == 1)||(breachType == 2))
+  {
+	printf("To: %s\n", recepient);
+	printf("Hi, the temperature is too %s\n", breachStr[breachType-1]);
   }
+  
 }
