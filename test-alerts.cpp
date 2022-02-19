@@ -50,4 +50,8 @@ TEST_CASE("check, classify breach and send alert based on target") {
 	strcpy(batteryDescription.brand, "Amaron");
 	batteryDescription.coolingType = PASSIVE_COOLING;
 	checkAndAlert(TO_EMAIL, batteryDescription, -10.0);
+	
+	strcpy(batteryDescription.brand, "Amaron");
+	batteryDescription.coolingType = PASSIVE_COOLING;
+	checkAndAlert(TO_EMAIL, batteryDescription, 25.0);
 }
