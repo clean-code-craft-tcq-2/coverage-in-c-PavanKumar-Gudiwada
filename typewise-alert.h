@@ -22,7 +22,7 @@ typedef enum {
 
 typedef struct {
   CoolingType coolingType;
-  char * brand;
+  char brand[48];
 } BatteryCharacter;
 
 typedef struct {
