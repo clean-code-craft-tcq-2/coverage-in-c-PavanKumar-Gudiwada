@@ -31,7 +31,7 @@ TEST_CASE("set limits according cooling type") {
 	REQUIRE(limitValues.lowerLimit == 0);
 	REQUIRE(limitValues.upperLimit == 40);
 	
-	limitValues = setLimits(3);//undefined cooling type
+	limitValues = setLimits((CoolingType)3);//undefined cooling type
 }
 
 TEST_CASE("classify type of breach (high/low/normal)") {
