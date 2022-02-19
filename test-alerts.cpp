@@ -30,6 +30,8 @@ TEST_CASE("set limits according cooling type") {
 	limitValues = setLimits(MED_ACTIVE_COOLING);
 	REQUIRE(limitValues.lowerLimit == 0);
 	REQUIRE(limitValues.upperLimit == 40);
+	
+	limitValues = setLimits(3);//undefined cooling type
 }
 
 TEST_CASE("classify type of breach (high/low/normal)") {
@@ -53,5 +55,5 @@ TEST_CASE("check, classify breach and send alert based on target") {
 	
 	strcpy(batteryDescription.brand, "Amaron");
 	batteryDescription.coolingType = PASSIVE_COOLING;
-	checkAndAlert(TO_EMAIL, batteryDescription, 25.0);
+	checkAndAlert(TO_EMAIL, batteryDescription, 25.0);//normal range
 }
