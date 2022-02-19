@@ -17,25 +17,24 @@ Limits setLimits(CoolingType coolingType)
 {
 	Limits limitValues;
 	
-	switch(coolingType) {
-    case PASSIVE_COOLING:
-      limitValues.lowerLimit = 0;
-      limitValues.upperLimit = 35;
-      break;
-    case HI_ACTIVE_COOLING:
-      limitValues.lowerLimit = 0;
-      limitValues.upperLimit = 45;
-      break;
-    case MED_ACTIVE_COOLING:
-      limitValues.lowerLimit = 0;
-      limitValues.upperLimit = 40;
-      break;
-  }
+	if(coolingType == PASSIVE_COOLING)
+	{
+		limitValues.lowerLimit = 0;
+      	limitValues.upperLimit = 35;
+	}else if(coolingType == HI_ACTIVE_COOLING)
+	{
+		limitValues.lowerLimit = 0;
+      	limitValues.upperLimit = 45;
+	}else if(coolingType == MED_ACTIVE_COOLING)
+	{
+		limitValues.lowerLimit = 0;
+      	limitValues.upperLimit = 40;
+	}
+	
   return limitValues;
 }
 
-BreachType classifyTemperatureBreach(
-    CoolingType coolingType, double temperatureInC) {
+BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) {
 
 	Limits limitValues;
 	limitValues = setLimits(coolingType);
@@ -43,21 +42,14 @@ BreachType classifyTemperatureBreach(
   return inferBreach(temperatureInC, limitValues.lowerLimit, limitValues.upperLimit);
 }
 
-void checkAndAlert(
-    AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
+void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
 
-  BreachType breachType = classifyTemperatureBreach(
-    batteryChar.coolingType, temperatureInC
-  );
+	// sendToTarget is an array of function pointers
+    void (*sendToTarget[])(BreachType) = {&sendToController, &sendToEmail};
 
-  switch(alertTarget) {
-    case TO_CONTROLLER:
-      sendToController(breachType);
-      break;
-    case TO_EMAIL:
-      sendToEmail(breachType);
-      break;
-  }
+  BreachType breachType = classifyTemperatureBreach(batteryChar.coolingType, temperatureInC);
+
+  (*sendToTarget[alertTarget])(breachType);
 }
 
 void sendToController(BreachType breachType) {
