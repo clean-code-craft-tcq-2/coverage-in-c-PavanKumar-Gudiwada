@@ -59,5 +59,5 @@ TEST_CASE("check, classify breach and send alert based on target") {
 	
 	strcpy(batteryDescription.brand, "Amaron");
 	batteryDescription.coolingType = PASSIVE_COOLING;
-	checkAndAlert(2, batteryDescription, 25.0);//to undefined target
+	checkAndAlert((AlertTarget)2, batteryDescription, 25.0);//to undefined target
 }
