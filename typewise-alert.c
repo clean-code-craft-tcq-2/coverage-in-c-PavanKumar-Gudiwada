@@ -3,6 +3,8 @@
 
 char * breachStr[] = {"low", "high"};
 
+Limits coolingMethodLimitValues[3] = {{0,35}, {0,45}, {0,40}};
+
 BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
   if(value < lowerLimit) {
     return TOO_LOW;
@@ -17,19 +19,7 @@ Limits setLimits(CoolingType coolingType)
 {
 	Limits limitValues;
 	
-	if(coolingType == PASSIVE_COOLING)
-	{
-		limitValues.lowerLimit = 0;
-      	limitValues.upperLimit = 35;
-	}else if(coolingType == HI_ACTIVE_COOLING)
-	{
-		limitValues.lowerLimit = 0;
-      	limitValues.upperLimit = 45;
-	}else if(coolingType == MED_ACTIVE_COOLING)
-	{
-		limitValues.lowerLimit = 0;
-      	limitValues.upperLimit = 40;
-	}
+	limitValues = coolingMethodLimitValues[(int)coolingType];
 	
   return limitValues;
 }
