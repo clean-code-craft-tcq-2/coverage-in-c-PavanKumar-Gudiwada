@@ -35,11 +35,17 @@ BreachType classifyTemperatureBreach(CoolingType coolingType, double temperature
 void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
 
 	// sendToTarget is an array of function pointers
-    void (*sendToTarget[])(BreachType) = {&sendToController, &sendToEmail};
+    void (*sendToTarget[])(BreachType) = {&sendToController, &sendToEmail, NULL};
 
   BreachType breachType = classifyTemperatureBreach(batteryChar.coolingType, temperatureInC);
-
-  (*sendToTarget[alertTarget])(breachType);
+	if((alertTarget >= 0) && (alertTarget <= 1))
+	{
+		(*sendToTarget[alertTarget])(breachType);
+	}else
+	{
+		(*sendToTarget[2])(breachType);
+	}
+  
 }
 
 void sendToController(BreachType breachType) {
