@@ -36,6 +36,8 @@ TEST_CASE("set limits according cooling type") {
 
 TEST_CASE("classify type of breach (high/low/normal)") {
   assert(classifyTemperatureBreach(HI_ACTIVE_COOLING, 20) == NORMAL);
+  assert(classifyTemperatureBreach(PASSIVE_COOLING, 20) == NORMAL);	
+  assert(classifyTemperatureBreach(MED_ACTIVE_COOLING, 20) == NORMAL);	
 }
 
 TEST_CASE("check, classify breach and send alert based on target") {
