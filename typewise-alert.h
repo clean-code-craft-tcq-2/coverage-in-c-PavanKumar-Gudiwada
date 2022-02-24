@@ -35,6 +35,4 @@ void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double
 void sendToController(BreachType breachType);
 void sendToEmail(BreachType breachType);
 
-extern BreachType inferBreach(double value, double lowerLimit, double upperLimit);//todo remove
-
 Limits setLimits(CoolingType coolingType);
